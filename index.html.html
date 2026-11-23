@@ -72,20 +72,21 @@ footer{text-align:center;padding:2rem 1rem;color:var(--muted);border-top:1px sol
 @keyframes rin{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
 .rin{animation:rin .6s cubic-bezier(.2,.7,.2,1) backwards}
 @media (prefers-reduced-motion:reduce){.rin{animation:none}}
-.show{position:relative;height:clamp(210px,30vw,330px);background:#e9e5da;border-bottom:3px solid var(--ink);overflow:hidden}
-.show::after{content:"";position:absolute;inset:0;pointer-events:none;mix-blend-mode:multiply;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.2'/%3E%3C/svg%3E")}
-.slide{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease}
-.slide.on{opacity:1}
-.slide svg{width:100%;height:100%;display:block}
-.cap{position:absolute;left:1rem;bottom:.8rem;background:rgba(255,255,255,.7);padding:.1rem .8rem;font:italic 500 .95rem 'Playfair Display',serif;color:#2b2b2b;transform:rotate(-1deg);z-index:1}
-.dots{position:absolute;right:1rem;bottom:.8rem;display:flex;gap:.5rem;z-index:2}
-.dots button{width:12px;height:12px;border-radius:50%;border:2px solid #2b2b2b;background:transparent;padding:0;cursor:pointer}
-.dots button.on{background:#2b2b2b}
 .hero{min-height:0;background:var(--card);align-items:center}
 .hero .ph{display:none}
 .hero div.t{color:var(--ink)}
 .hero h1{color:var(--accent)}
-@media (prefers-reduced-motion:reduce){.slide{transition:none}}
+/* poster */
+.poster{background:linear-gradient(180deg,#3a2c26 0%,#46352c 50%,var(--bg) 100%);padding:1.4rem 1rem 1.6rem}
+.strips{--g:10px;--H:clamp(220px,50cqw,520px);max-width:1000px;margin:auto;container-type:inline-size;display:grid;grid-template-columns:repeat(5,1fr);gap:var(--g)}
+@media (min-width:700px){.strips{--g:16px}}
+.col{display:flex;flex-direction:column}
+.col b{position:relative;z-index:1;font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(2.4rem,17cqw,8rem);line-height:.9;text-align:center;color:var(--accent);text-shadow:3px 3px 0 #2b211c;margin-bottom:-.1em}
+.strip{position:relative;height:calc(var(--H) * (100 - var(--cut)) / 100);overflow:hidden;-webkit-mask-image:linear-gradient(#000 55%,transparent);mask-image:linear-gradient(#000 55%,transparent)}
+.strip i{position:absolute;top:0;height:var(--H);width:100cqw;left:calc(var(--i) * -1 * (20cqw + var(--g) / 5));background-image:var(--photo,linear-gradient(#0000,#0000)),repeating-linear-gradient(0deg,rgba(60,25,18,.25) 0 2px,transparent 2px 22px),repeating-linear-gradient(90deg,rgba(60,25,18,.2) 0 2px,transparent 2px 46px),linear-gradient(180deg,#d6b48a,#a56f4f 55%,#6b3a2c);background-size:cover,auto,auto,cover;background-position:center}
+.poster.small{padding:.8rem 1rem .6rem}
+.poster.small .strips{--H:clamp(90px,17cqw,170px)}
+.poster.small .col b{font-size:clamp(1.6rem,8cqw,3.6rem)}
 </style>
 </head>
 <body>
@@ -95,12 +96,7 @@ footer{text-align:center;padding:2rem 1rem;color:var(--muted);border-top:1px sol
   <a class="logo" href="#home" aria-label="Rogha home"><b>ROGHA</b><small>A COMMUNITY CLUB OF INTELLECTUALS</small></a>
   <nav class="r" aria-label="More"><a href="#contact" data-p="contact">Contact</a><a href="#join" data-p="join">Join the community</a></nav>
 </div></header>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><filter id="rough" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency=".03" numOctaves="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3"/></filter><filter id="rough2" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence type="fractalNoise" baseFrequency=".04" numOctaves="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="22"/></filter><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#2b2b2b" stroke-width="1"/></pattern><pattern id="arc" width="30" height="65" y="205" patternUnits="userSpaceOnUse"><path d="M5 65V32a10 10 0 0 1 20 0V65" fill="none" stroke="#2b2b2b" stroke-width="1.4"/></pattern></defs></svg>
-<div class="show" role="group" aria-roledescription="carousel" aria-label="Landmarks of Peshawar">
-<div class="slide on"><svg viewBox="0 0 800 300" preserveAspectRatio="xMidYMax slice" role="img" aria-label="Pen sketch of Mahabat Khan Mosque"><g fill="#3a3a3a" opacity=".4" filter="url(#rough2)"><ellipse cx="730" cy="14" rx="80" ry="40"/><circle cx="670" cy="50" r="9"/><circle cx="70" cy="290" r="45"/></g><g filter="url(#rough)" fill="none" stroke="#2b2b2b" stroke-width="1.6" stroke-linejoin="round"><path d="M150 270h500M200 270V200h400v70"/><path d="M330 200a70 70 0 0 1 140 0M400 130v-22M395 108h10"/><path d="M205 200a32 32 0 0 1 64 0M531 200a32 32 0 0 1 64 0"/><path d="M360 270V175a40 40 0 0 1 80 0V270" fill="url(#hatch)"/><path d="M372 270V180a28 28 0 0 1 56 0V270" fill="#e9e5da"/><path d="M215 270v-30a12 12 0 0 1 24 0v30M255 270v-30a12 12 0 0 1 24 0v30M521 270v-30a12 12 0 0 1 24 0v30M561 270v-30a12 12 0 0 1 24 0v30"/><path d="M160 270V70h18v200M622 270V70h18v200"/><path d="M156 70h26M618 70h26M160 70v-14h18v14M622 70v-14h18v14M162 56a7 7 0 0 1 14 0M624 56a7 7 0 0 1 14 0M169 49v-12M631 49v-12"/><path d="M172 120v150M634 120v150" stroke-opacity=".5"/></g></svg><span class="cap">Mahabat Khan Mosque</span></div>
-<div class="slide"><svg viewBox="0 0 800 300" preserveAspectRatio="xMidYMax slice" role="img" aria-label="Pen sketch of Bala Hisar Fort"><g fill="#3a3a3a" opacity=".4" filter="url(#rough2)"><ellipse cx="90" cy="10" rx="85" ry="36"/><circle cx="150" cy="46" r="8"/><circle cx="740" cy="292" r="42"/></g><g filter="url(#rough)" fill="none" stroke="#2b2b2b" stroke-width="1.6" stroke-linejoin="round"><path d="M0 272Q200 258 400 272T800 272"/><path d="M40 270V150h720V270M40 270L70 150M760 270L730 150"/><path d="M40 148h720" stroke-width="12" stroke-dasharray="16 10"/><path d="M40 150V110h80v40M680 150V110h80v40"/><path d="M40 108h80M680 108h80" stroke-width="10" stroke-dasharray="12 8"/><path d="M330 270V110h140v160"/><path d="M330 108h140" stroke-width="10" stroke-dasharray="12 8"/><path d="M350 270V205a50 50 0 0 1 100 0V270" fill="url(#hatch)"/><path d="M400 108V62M400 62h38l-10 10 10 10h-38"/><path d="M130 190h150M520 190h150M130 225h150M520 225h150" stroke-opacity=".45"/><path d="M360 160v20M400 150v18M440 160v20"/></g></svg><span class="cap">Bala Hisar Fort</span></div>
-<div class="slide"><svg viewBox="0 0 800 300" preserveAspectRatio="xMidYMax slice" role="img" aria-label="Pen sketch of Islamia College"><g fill="#3a3a3a" opacity=".4" filter="url(#rough2)"><ellipse cx="720" cy="8" rx="90" ry="34"/><circle cx="640" cy="40" r="8"/><circle cx="60" cy="292" r="44"/></g><g filter="url(#rough)" fill="none" stroke="#2b2b2b" stroke-width="1.6" stroke-linejoin="round"><path d="M60 270h680M60 270V190h680V270"/><path d="M340 270V100h120V270M330 100h140"/><path d="M345 100a55 55 0 0 1 110 0M400 45v-18M394 27h12"/><path d="M350 270V215a20 20 0 0 1 40 0V270M410 270V215a20 20 0 0 1 40 0V270"/><path d="M382 160V135a18 18 0 0 1 36 0V160z" fill="url(#hatch)"/><rect x="60" y="205" width="270" height="65" fill="url(#arc)" stroke="none"/><rect x="480" y="205" width="260" height="65" fill="url(#arc)" stroke="none"/><path d="M60 190h270M470 190h270"/><path d="M80 190v-24h30v24M84 166a11 11 0 0 1 22 0M690 190v-24h30v24M694 166a11 11 0 0 1 22 0"/></g></svg><span class="cap">Islamia College</span></div>
-<div class="dots"></div></div>
+<div class="poster" id="poster"><div class="strips" role="img" aria-label="Rogha, over a photo of old Peshawar"><div class="col" style="--i:0;--cut:22"><b aria-hidden="true">R</b><div class="strip"><i></i></div></div><div class="col" style="--i:1;--cut:10"><b aria-hidden="true">O</b><div class="strip"><i></i></div></div><div class="col" style="--i:2;--cut:0"><b aria-hidden="true">G</b><div class="strip"><i></i></div></div><div class="col" style="--i:3;--cut:16"><b aria-hidden="true">H</b><div class="strip"><i></i></div></div><div class="col" style="--i:4;--cut:28"><b aria-hidden="true">A</b><div class="strip"><i></i></div></div></div></div>
 <main id="app"></main>
 <footer><span class="ur">روغہ</span><br>Rogha – Less ordinary. More curious. All about community.</footer>
 
@@ -117,7 +113,7 @@ var PAST=[
  {id:3,title:'Event three: topic name',date:'8 August 2026',speaker:'Guest speaker name',details:'A short write-up of what was discussed.',c:['#a0522d','#4a3b36']}
 ];
 /* ================================== */
-var app=document.getElementById('app'),evTab='up';
+var app=document.getElementById('app'),poster=document.getElementById('poster'),evTab='up';
 function evCard(e){return '<article class="ev"><div class="date"><b>'+e.day+'</b>'+e.mon+'</div><div><h3>'+e.title+'</h3><dl><dt>Date</dt><dd>'+e.date+', '+e.time+'</dd><dt>Location</dt><dd>'+e.location+'</dd><dt>Guest speaker</dt><dd>'+e.speaker+'</dd><dt>Topic</dt><dd>'+e.topic+'</dd></dl><p style="margin:0">'+e.details+'</p></div></article>'}
 function pCard(p){return '<button class="pcard" onclick="location.hash=\'past-'+p.id+'\'"><div class="cover" style="background:linear-gradient(135deg,'+p.c[0]+','+p.c[1]+')">Cover photo</div><div class="in"><h3>'+p.title+'</h3><span>'+p.date+'</span></div></button>'}
 var pages={
@@ -137,16 +133,14 @@ var first=true;
 function animateIn(f){var q='#app .hero,#app h2,#app .lead,#app .card,#app .ev,#app .pcard,#app .gal div,#app .tabsw,#app .btn,#app>a';if(f)q+=',header .logo,header nav a,footer';document.querySelectorAll(q).forEach(function(el,i){el.classList.remove('rin');void el.offsetWidth;el.style.animationDelay=Math.min(i*70,700)+'ms';el.classList.add('rin')})}
 function route(){var h=location.hash.slice(1)||'home',k=h,html;
  if(h.indexOf('past-')==0){html=pages.past(h.slice(5));k='events'}else if(pages[h]&&h!='past'){html=pages[h]()}else{k='home';html=pages.home()}
- app.innerHTML=html;animateIn(first);first=false;
+ app.innerHTML=html;poster.classList.toggle('small',k!='home');animateIn(first);first=false;
  document.querySelectorAll('nav a').forEach(function(a){a.classList.toggle('on',a.dataset.p==k)});
 }
 window.addEventListener('hashchange',function(){route();window.scrollTo(0,0)});
 route();
-(function(){var s=document.querySelectorAll('.slide'),d=document.querySelector('.dots'),i=0,t;
-function go(n){i=n;s.forEach(function(x,k){x.classList.toggle('on',k==n);d.children[k].classList.toggle('on',k==n)})}
-function restart(){clearInterval(t);if(!matchMedia('(prefers-reduced-motion:reduce)').matches)t=setInterval(function(){go((i+1)%s.length)},5500)}
-s.forEach(function(_,k){var b=document.createElement('button');b.setAttribute('aria-label','Show slide '+(k+1));b.onclick=function(){go(k);restart()};d.appendChild(b)});
-go(0);restart()})();
+/* Poster photo: save your photo as images/old-peshawar.jpg (a wide photo of the Sethi House area works best) */
+var PHOTO='images/old-peshawar.jpg';
+(function(){var im=new Image();im.onload=function(){poster.style.setProperty('--photo',"url('"+PHOTO+"')")};im.src=PHOTO})();
 </script>
 </body>
 </html>
