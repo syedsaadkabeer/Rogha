@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rogha – A Community Club of Intellectuals</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,500&family=Lora:wght@400;500;600&family=Noto+Nastaliq+Urdu:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3e8cc;--bg2:#ead9ae;--card:#fbf4e1;--ink:#3f322d;--muted:#6b5b50;--accent:#b85f26;--accent-ink:#fff8ea;--line:#d6c391;--dove:#8a8378;color-scheme:light;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#231b17;--bg2:#2d231e;--card:#352a24;--ink:#f1e6c8;--muted:#c0af94;--accent:#dd8645;--accent-ink:#231b17;--line:#4b3b31;--dove:#a79f92;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#231b17;--bg2:#2d231e;--card:#352a24;--ink:#f1e6c8;--muted:#c0af94;--accent:#dd8645;--accent-ink:#231b17;--line:#4b3b31;--dove:#a79f92;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Lora,Georgia,serif;font-size:1.05rem;line-height:1.7;
+background-image:radial-gradient(circle at 25% 25%,var(--line) 0 2px,transparent 3px),radial-gradient(circle at 75% 75%,var(--line) 0 2px,transparent 3px);background-size:46px 46px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
+h1,h2,h3{font-family:'Playfair Display',Georgia,serif;line-height:1.15;margin:0 0 .5em}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:2px solid var(--accent)}
+.bar{max-width:1100px;margin:auto;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:.6rem 1rem;gap:1rem}
+nav{display:flex;gap:.4rem}
+nav.r{justify-content:flex-end}
+nav a{font-family:'Playfair Display',serif;font-weight:700;font-size:1.05rem;text-decoration:none;color:var(--ink);padding:.4rem .9rem;border-radius:999px}
+nav a:hover{background:var(--bg2)}
+nav a.on{background:var(--accent);color:var(--accent-ink)}
+.logo{text-decoration:none;text-align:center;display:block;line-height:1}
+.logo b{font-family:'Playfair Display',serif;font-weight:900;font-size:2.3rem;color:var(--accent);text-shadow:2px 2px 0 var(--ink);letter-spacing:.01em}
+.logo small{display:block;font-family:'Playfair Display',serif;font-weight:700;font-size:.52rem;letter-spacing:.06em;color:var(--ink);margin-top:.25rem}
+@media (max-width:760px){.bar{grid-template-columns:1fr;justify-items:center;gap:.3rem;padding:.5rem}.logo{order:-1}.logo b{font-size:1.9rem}nav.l,nav.r{display:contents}.tabs{display:flex;gap:.2rem;flex-wrap:wrap;justify-content:center}.bar{display:flex;flex-wrap:wrap;justify-content:center}.logo{flex-basis:100%}nav a{padding:.3rem .7rem;font-size:.95rem}}
+main{max-width:1100px;margin:auto;padding:1.5rem 1rem 3rem}
+.hero{position:relative;min-height:420px;border-radius:6px;overflow:hidden;display:flex;align-items:flex-end;border:2px solid var(--ink);
+background:linear-gradient(180deg,rgba(35,27,23,.05),rgba(35,27,23,.78)),repeating-linear-gradient(45deg,#c98a52 0 14px,#b85f26 14px 28px)}
+.hero .ph{position:absolute;top:.8rem;right:.8rem;font-size:.8rem;background:var(--card);color:var(--muted);padding:.15rem .6rem;border-radius:999px}
+.hero div.t{padding:2rem;color:#fbf4e1;max-width:680px}
+.hero h1{font-size:clamp(2rem,6vw,3.6rem);font-weight:900}
+.hero p{margin:0 0 1.2rem;font-size:1.15rem}
+.btn{display:inline-block;background:var(--accent);color:var(--accent-ink);font-family:'Playfair Display',serif;font-weight:700;padding:.7rem 1.4rem;border-radius:4px;text-decoration:none;border:2px solid var(--ink);margin:0 .5rem .5rem 0;cursor:pointer;font-size:1rem}
+.btn.alt{background:var(--card);color:var(--ink)}
+section{margin-top:3.2rem}
+h2{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:900;color:var(--accent)}
+.lead{max-width:62ch;font-size:1.15rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.2rem}
+.card{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--accent);padding:1.2rem 1.3rem;border-radius:4px}
+.card h3{font-size:1.25rem;color:var(--ink)}
+.card p{margin:0;color:var(--muted)}
+.tabsw{display:flex;gap:.5rem;margin:1rem 0 1.5rem;flex-wrap:wrap}
+.tabsw button{font:700 1rem 'Playfair Display',serif;padding:.55rem 1.2rem;border:2px solid var(--ink);background:var(--card);color:var(--ink);border-radius:999px;cursor:pointer}
+.tabsw button[aria-pressed=true]{background:var(--accent);color:var(--accent-ink)}
+.ev{display:grid;grid-template-columns:auto 1fr;gap:1.2rem;background:var(--card);border:1px solid var(--line);padding:1.2rem;border-radius:4px;margin-bottom:1.2rem}
+.date{background:var(--accent);color:var(--accent-ink);text-align:center;padding:.6rem 1rem;border-radius:4px;font-family:'Playfair Display',serif;min-width:84px;align-self:start}
+.date b{display:block;font-size:2.2rem;line-height:1}
+.ev h3{font-size:1.5rem}
+dl{display:grid;grid-template-columns:auto 1fr;gap:.2rem 1rem;margin:.6rem 0;color:var(--muted)}
+dt{font-weight:600;color:var(--ink)}dd{margin:0}
+@media (max-width:560px){.ev{grid-template-columns:1fr}}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.3rem}
+.pcard{display:block;text-align:left;font:inherit;color:inherit;background:var(--card);border:2px solid var(--ink);border-radius:4px;padding:0;cursor:pointer;overflow:hidden;transition:transform .15s}
+.pcard:hover{transform:translateY(-4px)}
+.cover{height:170px;display:flex;align-items:center;justify-content:center;color:#fbf4e1;font:italic 500 .95rem 'Playfair Display',serif}
+.pcard .in{padding:.9rem 1.1rem}
+.pcard h3{font-size:1.2rem;margin:0 0 .2rem}
+.pcard span{color:var(--muted);font-size:.92rem}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:.8rem;margin-top:1rem}
+.gal div{aspect-ratio:4/3;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#fbf4e1;font-size:.9rem}
+.big{font-size:1.3rem}
+.contact .card{margin-bottom:1rem}
+footer{text-align:center;padding:2rem 1rem;color:var(--muted);border-top:1px solid var(--line);font-size:.95rem}
+.ur{font-family:'Noto Nastaliq Urdu',serif;color:var(--ink);font-size:1.4rem;line-height:2}
+@keyframes rin{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+.rin{animation:rin .6s cubic-bezier(.2,.7,.2,1) backwards}
+@media (prefers-reduced-motion:reduce){.rin{animation:none}}
+</style>
+</head>
+<body>
+<header><div class="bar">
+  <div class="tabs" style="display:contents"></div>
+  <nav class="l" aria-label="Main"><a href="#home" data-p="home">Home</a><a href="#events" data-p="events">Events</a></nav>
+  <a class="logo" href="#home" aria-label="Rogha home"><b>ROGHA</b><small>A COMMUNITY CLUB OF INTELLECTUALS</small></a>
+  <nav class="r" aria-label="More"><a href="#contact" data-p="contact">Contact</a><a href="#join" data-p="join">Join the community</a></nav>
+</div></header>
+<main id="app"></main>
+<footer><span class="ur">روغہ</span><br>Rogha – Less ordinary. More curious. All about community.</footer>
+
+<script>
+/* ===== Edit your content here ===== */
+var INFO={instagram:'https://instagram.com/rogha.club',instagramHandle:'@rogha.club',phone:'+92 000 0000000',whatsapp:'https://chat.whatsapp.com/your-group-link'};
+var UPCOMING=[
+ {title:'Why do we love old stories?',date:'12 December 2026',day:'12',mon:'Dec',time:'5:00 PM',location:'Venue to be announced',speaker:'Guest speaker name',topic:'Storytelling, memory and culture',details:'An open evening where our guest shares their journey and then opens the floor. Bring your questions, your stories and a friend.'},
+ {title:'Second event title',date:'9 January 2027',day:'9',mon:'Jan',time:'5:00 PM',location:'Venue to be announced',speaker:'Guest speaker name',topic:'Topic of the talk',details:'Add the details of this event here.'}
+];
+var PAST=[
+ {id:1,title:'Event one: topic name',date:'10 October 2026',speaker:'Guest speaker name',details:'A short write-up of what was discussed, who came and what people took away.',c:['#b85f26','#7a3f19']},
+ {id:2,title:'Event two: topic name',date:'12 September 2026',speaker:'Guest speaker name',details:'A short write-up of what was discussed.',c:['#8a8378','#4a443d']},
+ {id:3,title:'Event three: topic name',date:'8 August 2026',speaker:'Guest speaker name',details:'A short write-up of what was discussed.',c:['#a0522d','#4a3b36']}
+];
+/* ================================== */
+var app=document.getElementById('app'),evTab='up';
+function evCard(e){return '<article class="ev"><div class="date"><b>'+e.day+'</b>'+e.mon+'</div><div><h3>'+e.title+'</h3><dl><dt>Date</dt><dd>'+e.date+', '+e.time+'</dd><dt>Location</dt><dd>'+e.location+'</dd><dt>Guest speaker</dt><dd>'+e.speaker+'</dd><dt>Topic</dt><dd>'+e.topic+'</dd></dl><p style="margin:0">'+e.details+'</p></div></article>'}
+function pCard(p){return '<button class="pcard" onclick="location.hash=\'past-'+p.id+'\'"><div class="cover" style="background:linear-gradient(135deg,'+p.c[0]+','+p.c[1]+')">Cover photo</div><div class="in"><h3>'+p.title+'</h3><span>'+p.date+'</span></div></button>'}
+var pages={
+home:function(){return '<div class="hero"><span class="ph">Cover photo goes here</span><div class="t"><h1>Where strangers become friends</h1><p>Rogha is a community club for curious people. We gather around a guest speaker, talk, learn and leave with new connections.</p><a class="btn" href="#join">Join the community</a><a class="btn alt" href="#events">See events</a></div></div>'
++'<section><h2>What is Rogha?</h2><p class="lead">Rogha is a community club of intellectuals. It is a place where ideas find their people. We come together to talk, learn and share perspectives, and we turn random conversations into meaningful connections, beyond conventional spaces.</p></section>'
++'<section><h2>How a gathering works</h2><div class="grid"><div class="card"><h3>A guest speaker</h3><p>Each event features a speaker who shares their experience on one specific topic.</p></div><div class="card"><h3>An open conversation</h3><p>After the talk, everyone joins in with questions, disagreements and stories.</p></div><div class="card"><h3>New friendships</h3><p>Stay, chat and meet people you would never have met otherwise.</p></div></div></section>'
++'<section><h2>What we stand for</h2><div class="grid"><div class="card"><h3>Curiosity first</h3><p>Every question is welcome, whatever your background.</p></div><div class="card"><h3>Community over crowds</h3><p>Small, warm gatherings where people actually talk to each other.</p></div><div class="card"><h3>Learning together</h3><p>We share perspectives instead of competing to be right.</p></div><div class="card"><h3>Less ordinary</h3><p>Fresh topics and voices you will not hear in everyday spaces.</p></div></div></section>'
++'<section><h2>Next gathering</h2>'+evCard(UPCOMING[0])+'<a class="btn" href="#events">All events</a></section>'},
+events:function(){return '<h2>Events</h2><div class="tabsw" role="group" aria-label="Event type"><button aria-pressed="'+(evTab=='up')+'" onclick="evTab=\'up\';route()">Upcoming events</button><button aria-pressed="'+(evTab=='past')+'" onclick="evTab=\'past\';route()">Past events</button></div>'
++(evTab=='up'?(UPCOMING.length?UPCOMING.map(evCard).join(''):'<p>No events are scheduled yet. Join the community to hear first.</p>'):'<div class="pgrid">'+PAST.map(pCard).join('')+'</div>')},
+contact:function(){return '<h2>Contact</h2><p class="lead">Questions, ideas for speakers, or want to collaborate? Reach out.</p><div class="contact grid" style="margin-top:1.5rem"><div class="card"><h3>Instagram</h3><p class="big"><a href="'+INFO.instagram+'" target="_blank" rel="noopener">'+INFO.instagramHandle+'</a></p></div><div class="card"><h3>Phone</h3><p class="big"><a href="tel:'+INFO.phone.replace(/\s/g,'')+'">'+INFO.phone+'</a></p></div></div>'},
+join:function(){return '<h2>Join the community</h2><p class="lead">Our WhatsApp community is where we announce events, share reading and talk between gatherings. Everyone curious is welcome.</p><p style="margin-top:1.5rem"><a class="btn" href="'+INFO.whatsapp+'" target="_blank" rel="noopener">Join our WhatsApp community</a></p>'},
+past:function(id){var p=PAST.filter(function(x){return x.id==id})[0];if(!p)return pages.events();var g='';for(var i=1;i<=6;i++)g+='<div style="background:linear-gradient(135deg,'+p.c[(i%2)]+','+p.c[(i+1)%2]+')">Photo '+i+'</div>';
+return '<a href="#events" onclick="evTab=\'past\'">Back to past events</a><h2 style="margin-top:1rem">'+p.title+'</h2><div class="card"><dl><dt>Date</dt><dd>'+p.date+'</dd><dt>Guest</dt><dd>'+p.speaker+'</dd></dl><p style="margin:0">'+p.details+'</p></div><section style="margin-top:2rem"><h2>Gallery</h2><div class="gal">'+g+'</div></section>'}
+};
+var first=true;
+function animateIn(f){var q='#app .hero,#app h2,#app .lead,#app .card,#app .ev,#app .pcard,#app .gal div,#app .tabsw,#app .btn,#app>a';if(f)q+=',header .logo,header nav a,footer';document.querySelectorAll(q).forEach(function(el,i){el.classList.remove('rin');void el.offsetWidth;el.style.animationDelay=Math.min(i*70,700)+'ms';el.classList.add('rin')})}
+function route(){var h=location.hash.slice(1)||'home',k=h,html;
+ if(h.indexOf('past-')==0){html=pages.past(h.slice(5));k='events'}else if(pages[h]&&h!='past'){html=pages[h]()}else{k='home';html=pages.home()}
+ app.innerHTML=html;animateIn(first);first=false;
+ document.querySelectorAll('nav a').forEach(function(a){a.classList.toggle('on',a.dataset.p==k)});
+}
+window.addEventListener('hashchange',function(){route();window.scrollTo(0,0)});
+route();
+</script>
+</body>
+</html>
