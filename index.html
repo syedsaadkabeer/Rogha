@@ -84,6 +84,9 @@ footer{text-align:center;padding:2rem 1rem;color:var(--muted);border-top:1px sol
 .col b{position:relative;z-index:1;font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(2.4rem,17cqw,8rem);line-height:.9;text-align:center;color:var(--accent);text-shadow:3px 3px 0 #2b211c;margin-bottom:-.1em}
 .strip{position:relative;height:calc(var(--H) * (100 - var(--cut)) / 100);overflow:hidden;-webkit-mask-image:linear-gradient(#000 55%,transparent);mask-image:linear-gradient(#000 55%,transparent)}
 .strip i{position:absolute;top:0;height:var(--H);width:100cqw;left:calc(var(--i) * -1 * (20cqw + var(--g) / 5));background-image:var(--photo,linear-gradient(#0000,#0000)),repeating-linear-gradient(0deg,rgba(60,25,18,.25) 0 2px,transparent 2px 22px),repeating-linear-gradient(90deg,rgba(60,25,18,.2) 0 2px,transparent 2px 46px),linear-gradient(180deg,#d6b48a,#a56f4f 55%,#6b3a2c);background-size:cover,auto,auto,cover;background-position:center}
+.strip i.ph{opacity:0;transition:opacity 1.6s ease;background-size:cover;background-position:center}
+.strip i.ph.on{opacity:1}
+@media (prefers-reduced-motion:reduce){.strip i.ph{transition:none}}
 .poster.small{padding:.8rem 1rem .6rem}
 .poster.small .strips{--H:clamp(90px,17cqw,170px)}
 .poster.small .col b{font-size:clamp(1.6rem,8cqw,3.6rem)}
@@ -138,9 +141,14 @@ function route(){var h=location.hash.slice(1)||'home',k=h,html;
 }
 window.addEventListener('hashchange',function(){route();window.scrollTo(0,0)});
 route();
-/* Poster photo: save your photo as images/old-peshawar.jpg (a wide photo of the Sethi House area works best) */
-var PHOTO='images/old-peshawar.jpg';
-(function(){var im=new Image();im.onload=function(){poster.style.setProperty('--photo',"url('"+PHOTO+"')")};im.src=PHOTO})();
+/* Poster photos: put photos named 1.jpg, 2.jpg, 3.jpg ... in the images folder and they are found automatically.
+   Set IMG_DIR to '' if your photos sit next to index.html. Or list your own file names in PHOTOS. */
+var IMG_DIR='images/',PHOTOS=[];
+(function(){var strips=document.querySelectorAll('.strip'),count=0,cur=0;
+function show(n){strips.forEach(function(st){st.querySelectorAll('.ph').forEach(function(el,k){el.classList.toggle('on',k==n)})})}
+function add(src){strips.forEach(function(st){var el=document.createElement('i');el.className='ph';el.style.backgroundImage='url("'+src+'")';st.appendChild(el)});count++;if(count==1)show(0);if(count==2&&!matchMedia('(prefers-reduced-motion:reduce)').matches)setInterval(function(){cur=(cur+1)%count;show(cur)},6000)}
+function next(k){var src=PHOTOS.length?PHOTOS[k]:IMG_DIR+(k+1)+'.jpg';if(!src||k>29)return;var im=new Image();im.onload=function(){add(src);next(k+1)};im.src=src}
+next(0)})();
 </script>
 </body>
 </html>
