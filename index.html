@@ -90,6 +90,11 @@ footer{text-align:center;padding:2rem 1rem;color:var(--muted);border-top:1px sol
 .poster.small{padding:.8rem 1rem .6rem}
 .poster.small .strips{--H:clamp(90px,17cqw,170px)}
 .poster.small .col b{font-size:clamp(1.6rem,8cqw,3.6rem)}
+.adm label{display:block;margin:.6rem 0;font-weight:600}
+.adm input,.adm textarea{display:block;width:100%;padding:.55rem .7rem;font:inherit;border:2px solid var(--ink);border-radius:4px;background:var(--bg);color:var(--ink)}
+.adm .row{display:flex;justify-content:space-between;gap:1rem;align-items:center;padding:.5rem 0;border-bottom:1px solid var(--line)}
+.btn.sm{font-size:.9rem;padding:.3rem .8rem;margin:0 0 0 .4rem}
+.btn.danger{background:#a33;color:#fff}
 </style>
 </head>
 <body>
@@ -101,8 +106,9 @@ footer{text-align:center;padding:2rem 1rem;color:var(--muted);border-top:1px sol
 </div></header>
 <div class="poster" id="poster"><div class="strips" role="img" aria-label="Rogha, over a photo of old Peshawar"><div class="col" style="--i:0;--cut:22"><b aria-hidden="true">R</b><div class="strip"><i></i></div></div><div class="col" style="--i:1;--cut:10"><b aria-hidden="true">O</b><div class="strip"><i></i></div></div><div class="col" style="--i:2;--cut:0"><b aria-hidden="true">G</b><div class="strip"><i></i></div></div><div class="col" style="--i:3;--cut:16"><b aria-hidden="true">H</b><div class="strip"><i></i></div></div><div class="col" style="--i:4;--cut:28"><b aria-hidden="true">A</b><div class="strip"><i></i></div></div></div></div>
 <main id="app"></main>
-<footer><span class="ur">روغہ</span><br>Rogha – Less ordinary. More curious. All about community.</footer>
+<footer><span class="ur">روغہ</span><br>Rogha – Less ordinary. More curious. All about community.<br><a href="#admin" style="font-size:.8rem">Admin</a></footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script>
 /* ===== Edit your content here ===== */
 var INFO={instagram:'https://instagram.com/rogha.club',instagramHandle:'@rogha.club',phone:'+92 000 0000000',whatsapp:'https://chat.whatsapp.com/your-group-link'};
@@ -115,32 +121,78 @@ var PAST=[
  {id:2,title:'Event two: topic name',date:'12 September 2026',speaker:'Guest speaker name',details:'A short write-up of what was discussed.',c:['#8a8378','#4a443d']},
  {id:3,title:'Event three: topic name',date:'8 August 2026',speaker:'Guest speaker name',details:'A short write-up of what was discussed.',c:['#a0522d','#4a3b36']}
 ];
+/* Database: paste your Supabase values here (see setup steps) */
+var SUPABASE_URL='https://urqumghbgqtsqwktnnud.supabase.co',SUPABASE_KEY='sb_publishable_5Fx5iMLncNrVj2NHimkT0Q_m1x52Eun';
 /* ================================== */
 var app=document.getElementById('app'),poster=document.getElementById('poster'),evTab='up';
 function evCard(e){return '<article class="ev"><div class="date"><b>'+e.day+'</b>'+e.mon+'</div><div><h3>'+e.title+'</h3><dl><dt>Date</dt><dd>'+e.date+', '+e.time+'</dd><dt>Location</dt><dd>'+e.location+'</dd><dt>Guest speaker</dt><dd>'+e.speaker+'</dd><dt>Topic</dt><dd>'+e.topic+'</dd></dl><p style="margin:0">'+e.details+'</p></div></article>'}
-function pCard(p){return '<button class="pcard" onclick="location.hash=\'past-'+p.id+'\'"><div class="cover" style="background:linear-gradient(135deg,'+p.c[0]+','+p.c[1]+')">Cover photo</div><div class="in"><h3>'+p.title+'</h3><span>'+p.date+'</span></div></button>'}
+function pCard(p){return '<button class="pcard" onclick="location.hash=\'past-'+p.id+'\'"><div class="cover" style="'+cov(p)+'">'+(p.cover?'':'Cover photo')+'</div><div class="in"><h3>'+p.title+'</h3><span>'+p.date+'</span></div></button>'}
 var pages={
 home:function(){return '<div class="hero"><span class="ph">Cover photo goes here</span><div class="t"><h1>Where strangers become friends</h1><p>Rogha is a community club for curious people. We gather around a guest speaker, talk, learn and leave with new connections.</p><a class="btn" href="#join">Join the community</a><a class="btn alt" href="#events">See events</a></div></div>'
 +'<section><h2>What is Rogha?</h2><p class="lead">Rogha is a community club of intellectuals. It is a place where ideas find their people. We come together to talk, learn and share perspectives, and we turn random conversations into meaningful connections, beyond conventional spaces.</p></section>'
 +'<section><h2>How a gathering works</h2><div class="grid"><div class="card"><h3>A guest speaker</h3><p>Each event features a speaker who shares their experience on one specific topic.</p></div><div class="card"><h3>An open conversation</h3><p>After the talk, everyone joins in with questions, disagreements and stories.</p></div><div class="card"><h3>New friendships</h3><p>Stay, chat and meet people you would never have met otherwise.</p></div></div></section>'
 +'<section><h2>What we stand for</h2><div class="grid"><div class="card"><h3>Curiosity first</h3><p>Every question is welcome, whatever your background.</p></div><div class="card"><h3>Community over crowds</h3><p>Small, warm gatherings where people actually talk to each other.</p></div><div class="card"><h3>Learning together</h3><p>We share perspectives instead of competing to be right.</p></div><div class="card"><h3>Less ordinary</h3><p>Fresh topics and voices you will not hear in everyday spaces.</p></div></div></section>'
-+'<section><h2>Next gathering</h2>'+evCard(UPCOMING[0])+'<a class="btn" href="#events">All events</a></section>'},
++annHtml()+'<section><h2>Next gathering</h2>'+(UPCOMING[0]?evCard(UPCOMING[0]):'<p>No upcoming events yet. Check back soon.</p>')+'<a class="btn" href="#events">All events</a></section>'},
 events:function(){return '<h2>Events</h2><div class="tabsw" role="group" aria-label="Event type"><button aria-pressed="'+(evTab=='up')+'" onclick="evTab=\'up\';route()">Upcoming events</button><button aria-pressed="'+(evTab=='past')+'" onclick="evTab=\'past\';route()">Past events</button></div>'
-+(evTab=='up'?(UPCOMING.length?UPCOMING.map(evCard).join(''):'<p>No events are scheduled yet. Join the community to hear first.</p>'):'<div class="pgrid">'+PAST.map(pCard).join('')+'</div>')},
++(evTab=='up'?(UPCOMING.length?UPCOMING.map(evCard).join(''):'<p>No events are scheduled yet. Join the community to hear first.</p>'):(PAST.length?'<div class="pgrid">'+PAST.map(pCard).join('')+'</div>':'<p>No past events yet.</p>'))},
 contact:function(){return '<h2>Contact</h2><p class="lead">Questions, ideas for speakers, or want to collaborate? Reach out.</p><div class="contact grid" style="margin-top:1.5rem"><div class="card"><h3>Instagram</h3><p class="big"><a href="'+INFO.instagram+'" target="_blank" rel="noopener">'+INFO.instagramHandle+'</a></p></div><div class="card"><h3>Phone</h3><p class="big"><a href="tel:'+INFO.phone.replace(/\s/g,'')+'">'+INFO.phone+'</a></p></div></div>'},
 join:function(){return '<h2>Join the community</h2><p class="lead">Our WhatsApp community is where we announce events, share reading and talk between gatherings. Everyone curious is welcome.</p><p style="margin-top:1.5rem"><a class="btn" href="'+INFO.whatsapp+'" target="_blank" rel="noopener">Join our WhatsApp community</a></p>'},
-past:function(id){var p=PAST.filter(function(x){return x.id==id})[0];if(!p)return pages.events();var g='';for(var i=1;i<=6;i++)g+='<div style="background:linear-gradient(135deg,'+p.c[(i%2)]+','+p.c[(i+1)%2]+')">Photo '+i+'</div>';
+admin:function(){return '<h2>Admin</h2><div id="adm"></div>'},
+past:function(id){var p=PAST.filter(function(x){return x.id==id})[0];if(!p)return pages.events();var g='';if(p.gallery&&p.gallery.length){p.gallery.forEach(function(u){g+='<div style="background:url(\''+u+'\') center/cover"></div>'})}else{for(var i=1;i<=6;i++)g+='<div style="background:linear-gradient(135deg,'+p.c[(i%2)]+','+p.c[(i+1)%2]+')">Photo '+i+'</div>'}
 return '<a href="#events" onclick="evTab=\'past\'">Back to past events</a><h2 style="margin-top:1rem">'+p.title+'</h2><div class="card"><dl><dt>Date</dt><dd>'+p.date+'</dd><dt>Guest</dt><dd>'+p.speaker+'</dd></dl><p style="margin:0">'+p.details+'</p></div><section style="margin-top:2rem"><h2>Gallery</h2><div class="gal">'+g+'</div></section>'}
 };
+var sb=null,ANN=[],ROWS=[],ST='';
+if(window.supabase&&SUPABASE_URL&&SUPABASE_KEY)sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+function E(t){return String(t==null?'':t).replace(/[&<>"']/g,function(c){return '&#'+c.charCodeAt(0)+';'})}
+function cov(p){return p.cover?"background:url('"+p.cover+"') center/cover":'background:linear-gradient(135deg,'+p.c[0]+','+p.c[1]+')'}
+function annHtml(){return ANN.length?'<section><h2>Announcements</h2>'+ANN.slice(0,3).map(function(a){return '<div class="card" style="margin-bottom:1rem"><h3>'+E(a.title)+'</h3><p>'+E(a.body)+'</p></div>'}).join('')+'</section>':''}
+function loadData(){if(!sb)return Promise.resolve();
+ return Promise.all([sb.from('events').select('*').order('event_date',{ascending:true}),sb.from('announcements').select('*').order('created_at',{ascending:false})]).then(function(r){
+  ROWS=r[0].data||[];ANN=r[1].data||[];UPCOMING=[];PAST=[];var today=new Date().toISOString().slice(0,10);
+  ROWS.forEach(function(e){var d=new Date(e.event_date+'T00:00:00');
+   var o={id:e.id,title:E(e.title),date:d.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'}),day:d.getDate(),mon:d.toLocaleDateString('en-GB',{month:'short'}),time:E(e.event_time),location:E(e.location),speaker:E(e.speaker),topic:E(e.topic),details:E(e.details),cover:e.cover_url?E(e.cover_url):'',gallery:(e.gallery||[]).map(E),c:['#b85f26','#7a3f19']};
+   (e.event_date>=today?UPCOMING:PAST).push(o)});PAST.reverse()})}
+function resize(file){return new Promise(function(res){var im=new Image();im.onload=function(){var k=Math.min(1,1600/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);c.toBlob(res,'image/jpeg',.82)};im.src=URL.createObjectURL(file)})}
+function up(file){return resize(file).then(function(blob){var path=Date.now()+'-'+Math.random().toString(36).slice(2)+'.jpg';
+ return sb.storage.from('event-images').upload(path,blob,{contentType:'image/jpeg'}).then(function(r){if(r.error)throw r.error;return sb.storage.from('event-images').getPublicUrl(path).data.publicUrl})})}
+function adminInit(){var box=document.getElementById('adm');
+ if(!sb){box.innerHTML='<p class="lead">The database is not connected yet. Add your Supabase URL and key near the top of the code.</p>';return}
+ sb.auth.getSession().then(function(r){r.data.session?dash(box):login(box)})}
+function login(box){box.innerHTML='<form class="card adm"><h3>Admin login</h3><label>Email<input name="e" type="email" required></label><label>Password<input name="p" type="password" required></label><button class="btn">Log in</button><p id="msg"></p></form>';
+ box.querySelector('form').onsubmit=function(ev){ev.preventDefault();var f=ev.target;sb.auth.signInWithPassword({email:f.elements['e'].value,password:f.elements['p'].value}).then(function(r){if(r.error)f.querySelector('#msg').textContent='Wrong email or password.';else dash(box)})}}
+function dash(box){var m=ST;ST='';
+ var evs=ROWS.slice().reverse().map(function(e){return '<div class="row"><span>'+E(e.title)+' <small>('+E(e.event_date)+')</small></span><span><button class="btn alt sm" data-ed="'+e.id+'">Edit</button><button class="btn danger sm" data-de="'+e.id+'">Delete</button></span></div>'}).join('')||'<p>No events yet.</p>';
+ var ans=ANN.map(function(a){return '<div class="row"><span>'+E(a.title)+'</span><button class="btn danger sm" data-da="'+a.id+'">Delete</button></div>'}).join('')||'<p>No announcements yet.</p>';
+ box.innerHTML='<p><button class="btn alt sm" id="lo">Log out</button> <strong>'+m+'</strong></p>'
+ +'<form id="ef" class="card adm"><h3 id="eh">Add an event</h3><label>Title<input name="title" required></label><label>Date<input name="date" type="date" required></label><label>Time (for example 5:00 PM)<input name="time"></label><label>Location<input name="location"></label><label>Guest speaker<input name="speaker"></label><label>Topic<input name="topic"></label><label>Details<textarea name="details" rows="4"></textarea></label><label>Cover photo<input name="cover" type="file" accept="image/*"></label><label>Gallery photos (pick several)<input name="gallery" type="file" accept="image/*" multiple></label><button class="btn" id="sv">Save event</button><button type="button" class="btn alt" id="cn">Clear form</button></form>'
+ +'<form id="af" class="card adm" style="margin-top:1.2rem"><h3>Add an announcement</h3><label>Title<input name="title" required></label><label>Message<textarea name="body" rows="3"></textarea></label><button class="btn">Post announcement</button></form>'
+ +'<h3 style="margin-top:1.5rem">Events</h3><div class="adm">'+evs+'</div><h3 style="margin-top:1.5rem">Announcements</h3><div class="adm">'+ans+'</div>';
+ var ef=box.querySelector('#ef'),af=box.querySelector('#af'),editing=null,F=function(n){return ef.elements[n]};
+ function done(t){ST=t;loadData().then(route)}
+ box.querySelector('#lo').onclick=function(){sb.auth.signOut().then(function(){route()})};
+ box.querySelector('#cn').onclick=function(){route()};
+ box.querySelectorAll('[data-ed]').forEach(function(b){b.onclick=function(){editing=ROWS.filter(function(e){return e.id==b.dataset.ed})[0];['title','time','location','speaker','topic','details'].forEach(function(n){F(n).value=editing[n==='time'?'event_time':n]||''});F('date').value=editing.event_date;box.querySelector('#eh').textContent='Editing: '+editing.title;window.scrollTo(0,0)}});
+ box.querySelectorAll('[data-de]').forEach(function(b){b.onclick=function(){if(confirm('Delete this event?'))sb.from('events').delete().eq('id',b.dataset.de).then(function(r){r.error?alert(r.error.message):done('Event deleted.')})}});
+ box.querySelectorAll('[data-da]').forEach(function(b){b.onclick=function(){if(confirm('Delete this announcement?'))sb.from('announcements').delete().eq('id',b.dataset.da).then(function(r){r.error?alert(r.error.message):done('Announcement deleted.')})}});
+ ef.onsubmit=function(ev){ev.preventDefault();var sv=box.querySelector('#sv');sv.disabled=true;sv.textContent='Saving...';
+  var cf=F('cover').files[0],gf=Array.prototype.slice.call(F('gallery').files);
+  var row={title:F('title').value,event_date:F('date').value,event_time:F('time').value,location:F('location').value,speaker:F('speaker').value,topic:F('topic').value,details:F('details').value};
+  Promise.all([cf?up(cf):null,Promise.all(gf.map(function(f){return up(f)}))]).then(function(r){
+   if(r[0])row.cover_url=r[0];
+   var g=((editing&&editing.gallery)||[]).concat(r[1]);if(g.length)row.gallery=g;
+   return editing?sb.from('events').update(row).eq('id',editing.id):sb.from('events').insert(row)}).then(function(r){if(r.error)throw r.error;done('Event saved.')}).catch(function(e){sv.disabled=false;sv.textContent='Save event';alert('Could not save: '+(e.message||e))})};
+ af.onsubmit=function(ev){ev.preventDefault();sb.from('announcements').insert({title:af.elements['title'].value,body:af.elements['body'].value}).then(function(r){if(r.error)alert(r.error.message);else done('Announcement posted.')})};
+}
 var first=true;
 function animateIn(f){var q='#app .hero,#app h2,#app .lead,#app .card,#app .ev,#app .pcard,#app .gal div,#app .tabsw,#app .btn,#app>a';if(f)q+=',header .logo,header nav a,footer';document.querySelectorAll(q).forEach(function(el,i){el.classList.remove('rin');void el.offsetWidth;el.style.animationDelay=Math.min(i*70,700)+'ms';el.classList.add('rin')})}
 function route(){var h=location.hash.slice(1)||'home',k=h,html;
  if(h.indexOf('past-')==0){html=pages.past(h.slice(5));k='events'}else if(pages[h]&&h!='past'){html=pages[h]()}else{k='home';html=pages.home()}
- app.innerHTML=html;poster.classList.toggle('small',k!='home');animateIn(first);first=false;
+ app.innerHTML=html;if(k=='admin')adminInit();poster.classList.toggle('small',k!='home');animateIn(first);first=false;
  document.querySelectorAll('nav a').forEach(function(a){a.classList.toggle('on',a.dataset.p==k)});
 }
 window.addEventListener('hashchange',function(){route();window.scrollTo(0,0)});
 route();
+loadData().then(route);
 /* Poster photos: put photos named 1.jpg, 2.jpg, 3.jpg ... in the images folder and they are found automatically.
    Set IMG_DIR to '' if your photos sit next to index.html. Or list your own file names in PHOTOS. */
 var IMG_DIR='images/',PHOTOS=[];
